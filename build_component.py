@@ -308,19 +308,22 @@ def main():
 
   # Copy the necessary files to the respective target folders, 
   # following the instructions in scripts/config_build.txt.
-  config_file = open("C:\Users\Pbijv\Documents\Project 1\common-master\scripts\config_build.txt")
-
-  
+  config_file = open("scripts/config_build.txt")  
   for line in config_file.readlines():
     # Ignore comments and blank lines
     if line.startswith("#") or line.strip() == '':
       continue
 
       # If there are subdirectories, handle them
-      if line.split(" ")[-1].startswith("subdir_"):
-              source_spec = line.split(" ")[-1].strip()[len("subdir_"):]
-              copy_tree_to_target(source_spec, target_dir)
-              
+      # If there are subdirectories, handle them
+    subdir = string[string.find("*" + 1):]
+       if subdir == "":
+         copy_to_target(file_expr, target)
+       else:
+	 target_dir = target_dir + "\\" + subdir
+	 copy_tree_to_target(source_spec, target_dir)
+      
+             
     # Anything non-comment and non-empty specifies a 
     # source file or directory for us to use.
     if line.startswith("test"):
